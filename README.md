@@ -124,7 +124,7 @@ npm run icons      # regenerate the PNG icons from scripts/icons.mjs
 ```
 
 Deployed to GitHub Pages by `.github/workflows/deploy.yml` on every push to
-the default branch. Feature branches run the tests and build without deploying.
+`main`. Feature branches run the tests and build without deploying.
 
 ## How it is put together
 
