@@ -17,7 +17,7 @@ Window 9:30 PM – 1:10 AM · moon-free
 Home 4:45 AM
 ```
 
-**Live: https://scottyfncodes.github.io/Fable/** — open it on a phone and use
+**Live: https://scottyfncodes.github.io/LOOKUP/** — open it on a phone and use
 *Add to Home Screen*. It runs standalone, offline-capable, dark by default,
 and has a red night-vision mode for when you get out of the car.
 
