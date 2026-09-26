@@ -2,8 +2,7 @@ name: Test & deploy to GitHub Pages
 
 on:
   push:
- Deploy from the default branch only (GitHub Pages environment rule).
-branches: [main, 'claude/**']
+    branches: [main, 'claude/**']
   workflow_dispatch:
 
 permissions:
@@ -17,53 +16,29 @@ concurrency:
 
 jobs:
   test:
- Deploy from the default branch only (GitHub Pages environment rule).
-runs-on: ubuntu-latest
- Deploy from the default branch only (GitHub Pages environment rule).
-steps:
- Deploy from the default branch only (GitHub Pages environment rule).
-  - uses: actions/checkout@v4
- Deploy from the default branch only (GitHub Pages environment rule).
-  - uses: actions/setup-node@v4
- Deploy from the default branch only (GitHub Pages environment rule).
-    with:
- Deploy from the default branch only (GitHub Pages environment rule).
-      node-version: 22
- Deploy from the default branch only (GitHub Pages environment rule).
-      cache: npm
- Deploy from the default branch only (GitHub Pages environment rule).
-  - run: npm ci
- Deploy from the default branch only (GitHub Pages environment rule).
-  - run: npm run typecheck
- Deploy from the default branch only (GitHub Pages environment rule).
-  - run: npm test
- Deploy from the default branch only (GitHub Pages environment rule).
-  - run: npm run build
- Deploy from the default branch only (GitHub Pages environment rule).
-  - uses: actions/upload-pages-artifact@v3
- Deploy from the default branch only (GitHub Pages environment rule).
-    with:
- Deploy from the default branch only (GitHub Pages environment rule).
-      path: dist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
 
   deploy:
- Deploy from the default branch only (GitHub Pages environment rule).
-needs: test
- Deploy from the default branch only (GitHub Pages environment rule).
-# Deploy from the default branch only (GitHub Pages environment rule).
- Deploy from the default branch only (GitHub Pages environment rule).
-if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
- Deploy from the default branch only (GitHub Pages environment rule).
-runs-on: ubuntu-latest
- Deploy from the default branch only (GitHub Pages environment rule).
-environment:
- Deploy from the default branch only (GitHub Pages environment rule).
-  name: github-pages
- Deploy from the default branch only (GitHub Pages environment rule).
-  url: ${{ steps.deployment.outputs.page_url }}
- Deploy from the default branch only (GitHub Pages environment rule).
-steps:
- Deploy from the default branch only (GitHub Pages environment rule).
-  - id: deployment
- Deploy from the default branch only (GitHub Pages environment rule).
-    uses: actions/deploy-pages@v4
+    needs: test
+    # Deploy from main only; feature branches test and build without deploying.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
