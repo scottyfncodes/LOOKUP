@@ -1,17 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <radialGradient id="sky" cx="50%" cy="35%" r="75%">
-      <stop offset="0" stop-color="#1a2547"/>
-      <stop offset="1" stop-color="#070a12"/>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#05070f"/>
+      <stop offset="0.7" stop-color="#121a38"/>
+      <stop offset="1" stop-color="#3a3466"/>
+    </linearGradient>
+    <linearGradient id="band" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b9c4ff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#d8d4ff" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#b9c4ff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#ffd66b" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#ffd66b" stop-opacity="0"/>
     </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
   </defs>
-  <rect width="512" height="512" rx="112" fill="url(#sky)"/>
-  <g fill="#f4ecd8">
-    <circle cx="120" cy="120" r="5"/><circle cx="392" cy="96" r="4"/><circle cx="440" cy="200" r="3"/>
-    <circle cx="80" cy="260" r="3"/><circle cx="300" cy="70" r="3"/><circle cx="180" cy="200" r="3.5"/>
-    <circle cx="420" cy="320" r="3"/><circle cx="90" cy="380" r="4"/><circle cx="350" cy="160" r="2.5"/>
+  <rect width="512" height="512" fill="url(#sky)"/>
+  <!-- the Milky Way -->
+  <g transform="rotate(-38 256 256)" filter="url(#soft)">
+    <rect x="-120" y="196" width="752" height="96" fill="url(#band)"/>
+    <ellipse cx="270" cy="244" rx="160" ry="26" fill="#ffe9c7" opacity="0.22"/>
   </g>
-  <path d="M256 128 l22 62 66 4 -52 40 18 64 -54 -36 -54 36 18 -64 -52 -40 66 -4z" fill="#ffd86b"/>
-  <path d="M0 512 L0 420 Q120 340 256 372 Q392 404 512 350 L512 512 Z" fill="#0b0f1c"/>
-  <path d="M0 512 L0 430 Q120 350 256 382 Q392 414 512 360 L512 512 Z" fill="#11172a"/>
+  <!-- stars -->
+  <g fill="#fff">
+    <circle cx="60" cy="60" r="2.5"/><circle cx="130" cy="34" r="2"/><circle cx="96" cy="150" r="3"/>
+    <circle cx="210" cy="88" r="2"/><circle cx="182" cy="196" r="2.5"/><circle cx="300" cy="64" r="3"/>
+    <circle cx="262" cy="160" r="2"/><circle cx="452" cy="210" r="2.5"/><circle cx="470" cy="56" r="2"/>
+    <circle cx="44" cy="244" r="2"/><circle cx="142" cy="268" r="2.5"/><circle cx="330" cy="226" r="2"/>
+    <circle cx="420" cy="290" r="2"/><circle cx="236" cy="252" r="1.8"/><circle cx="74" cy="320" r="1.8"/>
+    <circle cx="482" cy="140" r="1.8"/><circle cx="350" cy="140" r="1.8"/>
+  </g>
+  <!-- the one worth going out for -->
+  <circle cx="386" cy="112" r="64" fill="url(#halo)"/>
+  <path d="M386 72 L394 104 L426 112 L394 120 L386 152 L378 120 L346 112 L378 104 Z" fill="#ffe7a3"/>
+  <circle cx="386" cy="112" r="7" fill="#fff"/>
+  <!-- hill -->
+  <path d="M0 410 C 120 360 300 352 512 400 V512 H0 Z" fill="#070a12"/>
+  <!-- telescope on a tripod, aimed at the star -->
+  <g fill="#1c2448" stroke="#5a66a8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M196 372 L170 432 M196 372 L222 432 M196 372 L198 436" fill="none" stroke="#3a4680" stroke-width="10"/>
+    <g transform="rotate(-53 196 366)">
+      <rect x="150" y="348" width="128" height="34" rx="6"/>
+      <rect x="270" y="342" width="22" height="46" rx="4"/>
+      <rect x="128" y="354" width="26" height="22" rx="3"/>
+    </g>
+    <circle cx="196" cy="368" r="10"/>
+  </g>
+  <!-- line of sight -->
+  <path d="M266 274 L370 134" stroke="#ffd66b" stroke-width="3" stroke-dasharray="3 12" stroke-linecap="round" opacity="0.7"/>
 </svg>
