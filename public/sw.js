@@ -1,6 +1,6 @@
 // LOOKUP service worker: offline app shell only. Live data (forecast, routing,
 // space weather) is never served stale from here; the app has its own labelled cache.
-const CACHE = 'lookup-shell-v1';
+const CACHE = 'lookup-shell-v2';
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
