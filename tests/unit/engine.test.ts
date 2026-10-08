@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { buildNight, moonInterference, tonightDate } from '../../src/core/engine/night';
-import { bestWindow, lightPollutionFactor, scoreNight } from '../../src/core/engine/score';
+import { bestWindow, lightPollutionFactor, scoreNight, verdict } from '../../src/core/engine/score';
 import { buildTimeline } from '../../src/core/engine/plan';
 import { darkCalendar, nextDarkWeekend } from '../../src/core/engine/calendar';
 import type { HourForecast } from '../../src/core/forecast';
@@ -106,6 +106,20 @@ describe('scoring', () => {
     expect(s.ifClear).toBeGreaterThan(8.5);
     expect(s.reasons[0].confidence).toBe('forecast');
     expect(s.window).not.toBeNull();
+  });
+  it('without a forecast the answer is the if-clear call, said conditionally, never NO FORECAST beside a number', () => {
+    const s = scoreNight({ night, bortle: { min: 1, max: 3 } });
+    const v = verdict(s);
+    expect(v.conditional).toBe(true);
+    expect(v.tier).toBe('go');
+    expect(v.label).toMatch(/IF IT.S CLEAR/);
+    expect(s.headline).not.toMatch(/\d/);
+  });
+  it('with a forecast the answer is the tier itself', () => {
+    const fc = flatForecast(night, 5);
+    const n = buildNight(date, SAND_DUNES, TZ, { forecast: fc });
+    const v = verdict(scoreNight({ night: n, bortle: { min: 1, max: 3 }, forecast: fc }));
+    expect(v).toEqual({ label: 'GO. LOOK UP.', tier: 'go', conditional: false });
   });
   it('a clear new-moon night at a dark site is a GO', () => {
     const fc = flatForecast(night, 5);

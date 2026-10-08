@@ -74,6 +74,28 @@ function tierOf(v: number | null): Tier {
   return 'skip';
 }
 
+/** The answer when the clouds are unknown: the if-clear tier, said conditionally. */
+const IF_CLEAR_LABEL: Record<Tier, string> = {
+  go: 'GO IF IT’S CLEAR',
+  worth: 'WORTH IT IF CLEAR',
+  marginal: 'MARGINAL EVEN IF CLEAR',
+  skip: 'STAY IN',
+  unknown: 'NO FORECAST',
+};
+
+/**
+ * The one-line answer to "is tonight worth it?". With a forecast it is the
+ * tier itself. Without one the night is still a yes, a maybe or a no on the
+ * Moon, darkness and site alone, so the answer is given on that condition
+ * rather than as a bare NO FORECAST beside a 10.0; the tier colour follows.
+ */
+export function verdict(s: Score): { label: string; tier: Tier; conditional: boolean } {
+  if (s.value != null || s.tier !== 'unknown') return { label: TIER_LABEL[s.tier], tier: s.tier, conditional: false };
+  if (!s.window) return { label: TIER_LABEL.unknown, tier: 'unknown', conditional: false };
+  const t = tierOf(s.ifClear);
+  return { label: IF_CLEAR_LABEL[t], tier: t, conditional: true };
+}
+
 /**
  * Best window: the 2-hour stretch with the highest mean quality, grown outward
  * while the sky stays at least 70% as good. Only astronomically dark samples
@@ -188,7 +210,7 @@ export function scoreNight(inp: ScoreInputs): Score {
     reasons.unshift({ text: 'No cloud forecast for this night: the sky can only be scored as if clear.', confidence: 'forecast', effect: 'neutral' });
     return {
       value: null, ifClear, tier: 'unknown',
-      headline: `If it's clear: ${ifClear.toFixed(1)}.`,
+      headline: 'No cloud forecast yet: scored on the Moon, darkness and site alone.',
       reasons, window: winClear, comfort,
     };
   }
