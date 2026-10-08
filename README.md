@@ -53,8 +53,9 @@ The Bortle class of each site is a *range* and an *estimate*: DarkSky
 International certifies places but does not publish Bortle classes, and no
 light-pollution map was read for this build. Drive times come from OSRM with
 no live traffic and no seasonal closures, and say so. If the cloud forecast
-cannot be fetched, the night is scored **as if clear**, the tier reads **NO
-FORECAST**, and the first reason says why.
+cannot be fetched, the night is scored **as if clear**, the call is said on
+that condition (**GO IF IT’S CLEAR**, **WORTH IT IF CLEAR**, …) and the first
+reason says why.
 
 LOOKUP never assumes where you live. Home comes from a typed town, typed
 coordinates, or a location button you press.
@@ -75,7 +76,8 @@ Every night is sampled every 15 minutes from sunset to sunrise.
    at peak, or a Kp ≥ 7 aurora forecast, and comfort penalties for wind, cold,
    precipitation and dew.
 6. **Verdict.** ≥ 7.5 **GO. LOOK UP.** · ≥ 5.5 **WORTH IT** · ≥ 3.5 **MARGINAL** ·
-   else **STAY IN** · no forecast → **NO FORECAST**, with an *if clear* number.
+   else **STAY IN** · no forecast → the same call *if clear* (**GO IF IT’S
+   CLEAR**), with an *if clear* number.
 7. **Timeline.** Arrive 25 minutes before the window so your eyes adapt while
    it gets dark. If a latest-home time is set, the window is cut to make it;
    the drive never is.

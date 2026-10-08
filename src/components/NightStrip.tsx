@@ -105,7 +105,8 @@ export function NightStrip({ night, window: win, now }: { night: Night; window: 
       {now > start && now < end && (
         <g>
           <line x1={x(now)} x2={x(now)} y1={top - 4} y2={top + plotH} stroke="var(--ink)" strokeWidth={1.5} strokeDasharray="2 3" />
-          <text x={x(now)} y={top - 9} textAnchor="middle" fontSize={10} fill="var(--ink)" fontFamily="var(--font-display)" fontWeight={700}>NOW</text>
+          {/* Inside the window the window label owns the top edge, so NOW sits at the foot of the line. */}
+          <text x={x(now) + 4} y={win && now >= win.start && now <= win.end ? top + plotH - 6 : top - 9} textAnchor={win && now >= win.start && now <= win.end ? 'start' : 'middle'} fontSize={10} fill="var(--ink)" fontFamily="var(--font-display)" fontWeight={700}>NOW</text>
         </g>
       )}
     </svg>
