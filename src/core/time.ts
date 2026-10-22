@@ -72,7 +72,7 @@ export function weekdayOf(d: LocalDate): number {
 }
 
 export function fmtTime(ms: number | null, tz: string): string {
-  if (ms == null || !Number.isFinite(ms)) return '—';
+  if (ms == null || !Number.isFinite(ms)) return '–';
   return new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', minute: '2-digit' }).format(new Date(ms));
 }
 

@@ -15,7 +15,7 @@ export function Week({ data, onPickNight }: { data: NightData; onPickNight: () =
 
   return (
     <>
-      <h2 className="h2">Later · {sel?.site.name ?? '—'}</h2>
+      <h2 className="h2">Later · {sel?.site.name ?? '–'}</h2>
       <p className="dim" style={{ margin: '0 0 12px' }}>
         Ten nights with a forecast, then the Moon alone. The further out, the less LOOKUP is willing to claim.
       </p>

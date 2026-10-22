@@ -8,17 +8,23 @@ import { SHOWERS, SHOWER_SOURCE } from '../data/showers';
 import { SWPC_SOURCE } from '../services/swpc';
 import type { NightData } from '../store/useNightData';
 
-function moonGlyph(phase: string): string {
-  switch (phase) {
-    case 'New Moon': return '🌑';
-    case 'Waxing Crescent': return '🌒';
-    case 'First Quarter': return '🌓';
-    case 'Waxing Gibbous': return '🌔';
-    case 'Full Moon': return '🌕';
-    case 'Waning Gibbous': return '🌖';
-    case 'Last Quarter': return '🌗';
-    default: return '🌘';
-  }
+/**
+ * The Moon as it looks tonight, drawn from the computed illuminated fraction
+ * rather than an emoji, so it follows the palette (and night-vision red).
+ * Lit limb on the right while waxing, on the left while waning (northern sky).
+ */
+function MoonDisc({ illumination, waxing }: { illumination: number; waxing: boolean }) {
+  const r = 26;
+  const c = 28;
+  const k = Math.min(1, Math.max(0, illumination));
+  const rx = r * Math.abs(2 * k - 1);
+  const lit = `M ${c} ${c - r} A ${r} ${r} 0 0 1 ${c} ${c + r} A ${rx} ${r} 0 0 ${k < 0.5 ? 0 : 1} ${c} ${c - r} Z`;
+  return (
+    <svg viewBox="0 0 56 56" width="56" height="56" aria-hidden style={{ flex: 'none' }}>
+      <circle cx={c} cy={c} r={r} fill="var(--panel-2)" stroke="var(--line)" strokeWidth="1.5" />
+      {k > 0.01 && <path d={lit} fill="var(--moon)" transform={waxing ? undefined : `scale(-1 1) translate(${-2 * c} 0)`} />}
+    </svg>
+  );
 }
 
 export function Sky({ data }: { data: NightData }) {
@@ -64,7 +70,7 @@ export function Sky({ data }: { data: NightData }) {
             <div className="display" style={{ fontSize: 30 }}>{night.moon.phase}</div>
             <div className="muted">{Math.round(night.moon.illumination * 100)}% illuminated</div>
           </div>
-          <div style={{ fontSize: 56, lineHeight: 1 }} aria-hidden>{moonGlyph(night.moon.phase)}</div>
+          <MoonDisc illumination={night.moon.illumination} waxing={night.moon.phase.startsWith('Waxing') || night.moon.phase === 'First Quarter'} />
         </div>
         <div className="grid2" style={{ marginTop: 12 }}>
           <div className="stat"><b>{night.moon.upAtSunset ? 'up at sunset' : night.moon.rises[0] != null ? fmtTime(night.moon.rises[0], tz) : 'no rise'}</b><span>moonrise</span></div>
