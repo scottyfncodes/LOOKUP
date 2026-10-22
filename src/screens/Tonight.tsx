@@ -156,10 +156,10 @@ export function Tonight({ data, go }: { data: NightData; go: (tab: 'sites' | 'mo
             <div className="label" style={{ marginTop: 0 }}>Conditions at the window midpoint</div>
             {sel.night.hasForecast ? (
               <div className="grid4">
-                <div className="stat"><b>{sel.score.window?.meanCloud != null ? `${Math.round(sel.score.window.meanCloud)}%` : '—'}</b><span>cloud</span></div>
-                <div className="stat"><b>{sel.score.comfort.temp != null ? `${Math.round(sel.score.comfort.temp)}°` : '—'}</b><span>temp</span></div>
-                <div className="stat"><b>{sel.score.comfort.wind != null ? Math.round(sel.score.comfort.wind) : '—'}</b><span>wind mph</span></div>
-                <div className="stat"><b>{sel.score.comfort.humidity != null ? `${Math.round(sel.score.comfort.humidity)}%` : '—'}</b><span>humidity</span></div>
+                <div className="stat"><b>{sel.score.window?.meanCloud != null ? `${Math.round(sel.score.window.meanCloud)}%` : '–'}</b><span>cloud</span></div>
+                <div className="stat"><b>{sel.score.comfort.temp != null ? `${Math.round(sel.score.comfort.temp)}°` : '–'}</b><span>temp</span></div>
+                <div className="stat"><b>{sel.score.comfort.wind != null ? Math.round(sel.score.comfort.wind) : '–'}</b><span>wind mph</span></div>
+                <div className="stat"><b>{sel.score.comfort.humidity != null ? `${Math.round(sel.score.comfort.humidity)}%` : '–'}</b><span>humidity</span></div>
               </div>
             ) : (
               <div className="nodata">No forecast for this night{data.loading ? ' yet' : ''}. Forecasts run about ten days out.</div>
@@ -177,7 +177,7 @@ export function Tonight({ data, go }: { data: NightData; go: (tab: 'sites' | 'mo
             <div className="grid3">
               <div className="stat"><b>{measureText(sel.site.bortle)}</b><span>Bortle</span></div>
               <div className="stat"><b>{measureText(sel.site.elevationM ?? null, ' m')}</b><span>elevation</span></div>
-              <div className="stat"><b>{sel.site.certifiedYear ?? '—'}</b><span>certified</span></div>
+              <div className="stat"><b>{sel.site.certifiedYear ?? '–'}</b><span>certified</span></div>
             </div>
             {sel.site.notes.length > 0 && (
               <ul className="muted small" style={{ margin: '10px 0 0', paddingLeft: 18 }}>
